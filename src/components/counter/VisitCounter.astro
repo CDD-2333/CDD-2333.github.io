@@ -1,0 +1,32 @@
+---
+interface Props {
+  /** Show per-page view count */
+  pageView?: boolean
+  /** Show site-wide total views */
+  sitePV?: boolean
+  /** Show site-wide unique visitors */
+  siteUV?: boolean
+  class?: string
+}
+
+const { pageView, sitePV, siteUV, class: className } = Astro.props
+---
+
+{
+  pageView && <span class={className}>Views: <span id='busuanzi_value_page_pv' /></span>
+}
+{
+  sitePV && <span class={className}>Site Views: <span id='busuanzi_value_site_pv' /></span>
+}
+{
+  siteUV && <span class={className}>Visitors: <span id='busuanzi_value_site_uv' /></span>
+}
+
+<script is:inline data-astro-rerun>
+  (function loadBusuanzi() {
+    const script = document.createElement('script')
+    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
+    script.async = true
+    document.body.appendChild(script)
+  })()
+</script>

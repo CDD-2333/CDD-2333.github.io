@@ -7,6 +7,7 @@ import { Button, Card, Icon, Label } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
+import VisitCounter from '@/components/counter/VisitCounter.astro'
 import config from '@/site-config'
 
 const MAX_POSTS = 10
@@ -122,6 +123,8 @@ if (!images[imagePath])
       <Section title='Skills'>
         <SkillLayout title='Tech Stack' skills={['C (Familiar)', 'C++ (Exploring)', 'Python (Exploring)', 'Haskell (Beginner)']} />
       </Section>
+
+      <VisitCounter sitePV class='text-center text-sm text-muted-foreground' />
     </div>
     <p class='mt-12 text-center text-muted-foreground'>Be the change you wish to see in the world.</p>
   </main>
