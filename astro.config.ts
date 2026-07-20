@@ -1,7 +1,6 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
-import vercel from '@astrojs/vercel'
 import AstroPureIntegration from 'astro-pure'
-import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config'
+import { defineConfig, svgoOptimizer } from 'astro/config'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 
@@ -25,7 +24,7 @@ import config from './src/site.config.ts'
 // https://astro.build/config
 export default defineConfig({
   // [Basic]
-  site: 'https://astro-pure.js.org',
+  site: 'https://CDD-2333.github.io',
   // Deploy to a sub path
   // https://astro-pure.js.org/docs/setup/deployment#platform-with-base-path
   // base: '/astro-pure/',
@@ -38,13 +37,8 @@ export default defineConfig({
     defaultStrategy: 'viewport'
   },
 
-  // [Adapter]
-  // https://docs.astro.build/en/guides/deploy/
-  adapter: vercel({ imageService: true }),
-  output: 'server',
-  // Local (standalone)
-  // adapter: node({ mode: 'standalone' }),
-  // output: 'server',
+  // [Static output for GitHub Pages]
+  output: 'static',
 
   // [Assets]
   image: {
@@ -55,21 +49,17 @@ export default defineConfig({
   },
   // Enable font preloading and optimization
   // https://docs.astro.build/en/guides/fonts/
-  fonts: [
-    {
-      provider: fontProviders.fontshare(),
-      name: 'Satoshi',
-      cssVariable: '--font-satoshi',
-      // Default included:
-      // weights: [400],
-      // styles: ["normal", "italics"],
-      // subsets: ["cyrillic-ext", "cyrillic", "greek-ext", "greek", "vietnamese", "latin-ext", "latin"],
-      // fallbacks: ["sans-serif"],
-      styles: ['normal', 'italic'],
-      weights: [400, 500],
-      subsets: ['latin']
-    }
-  ],
+  // TODO: temporarily disabled due to network issue fetching fontshare.com
+  // fonts: [
+  //   {
+  //     provider: fontProviders.fontshare(),
+  //     name: 'Satoshi',
+  //     cssVariable: '--font-satoshi',
+  //     styles: ['normal', 'italic'],
+  //     weights: [400, 500],
+  //     subsets: ['latin']
+  //   }
+  // ],
 
   // [Markdown]
   markdown: {
@@ -133,9 +123,6 @@ export default defineConfig({
     // Enable SVGO optimization for SVG assets
     // https://docs.astro.build/en/reference/experimental-flags/svg-optimization/
     svgOptimizer: svgoOptimizer(),
-    // Enables pre-rendering your prefetched pages on the client in supported browsers.
-    // https://docs.astro.build/en/reference/experimental-flags/client-prerender/
-    clientPrerender: true,
     // https://docs.astro.build/en/reference/experimental-flags/queued-rendering/
     queuedRendering: {
       enabled: true

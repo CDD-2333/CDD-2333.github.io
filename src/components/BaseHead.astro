@@ -1,7 +1,6 @@
 ---
-import { Font } from 'astro:assets'
-
 import { prod } from 'astro-pure/server'
+// import { Font } from 'astro:assets' // temporarily disabled due to fontshare.com network issue
 import type { SiteMeta } from 'astro-pure/types'
 import config from 'virtual:config'
 
@@ -27,11 +26,12 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 <link rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png' />
 <link rel='manifest' href='/favicon/site.webmanifest' />
 
-{/* Font preloads */}
-<Font cssVariable='--font-satoshi' preload={[{ subset: 'latin', style: 'normal' }]} />
+{/* Font preloads (temporarily disabled due to fontshare.com network issue) */}
+{/* <Font cssVariable='--font-satoshi' preload={[{ subset: 'latin', style: 'normal' }]} /> */}
 <style>
   body {
-    font-family: var(--font-satoshi);
+    /* font-family: var(--font-satoshi); */
+    font-family: sans-serif;
   }
 </style>
 
