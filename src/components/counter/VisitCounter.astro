@@ -23,10 +23,34 @@ const { pageView, sitePV, siteUV, class: className } = Astro.props
 }
 
 <script is:inline data-astro-rerun>
-  (function loadBusuanzi() {
-    const script = document.createElement('script')
-    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
-    script.async = true
-    document.body.appendChild(script)
+  (function fetchVercount() {
+    const API = 'https://events.vercount.one/api/v2/log'
+    const url = window.location.href
+    if (!url.startsWith('http')) return
+
+    const host = window.location.host || 'unknown-host'
+    const uvKey = 'vercount_uv_' + host.replace(/[^a-zA-Z0-9_-]/g, '_')
+    const isNewUv = document.cookie.indexOf(uvKey + '=') === -1
+    if (isNewUv) {
+      document.cookie = uvKey + '=1; path=/; max-age=31536000; samesite=lax'
+    }
+
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, isNewUv })
+    })
+      .then(function (r) { return r.json() })
+      .then(function (res) {
+        var data = (res && res.data) || res || {}
+        var keys = ['site_pv', 'page_pv', 'site_uv']
+        for (var i = 0; i < keys.length; i++) {
+          var el = document.getElementById('busuanzi_value_' + keys[i])
+          if (el) el.textContent = data[keys[i]] || '0'
+        }
+      })
+      .catch(function () {
+        // Counter is non-essential; fail silently
+      })
   })()
 </script>

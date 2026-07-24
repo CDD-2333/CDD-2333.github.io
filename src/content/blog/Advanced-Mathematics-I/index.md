@@ -7,7 +7,7 @@ tags: ["PKU", "Math", "Advanced Mathematics"]
 
 本份汇编整理了北京大学高等数学 A/B (I) 的历年考试真题，包含期中与期末试题，共 46 页。题目来源包括高数 A 和高数 B 两类课程，可供期末复习参考。
 
-下载链接：[📥 Advanced-Mathematics-I-past-exams.pdf](/images/advanced-math/Advanced-Mathematics-I-past-exams.pdf)
+下载链接：[Advanced-Mathematics-I-past-exams.pdf](/images/advanced-math/Advanced-Mathematics-I-past-exams.pdf)
 
 ## 预览 (前 3 页)
 
