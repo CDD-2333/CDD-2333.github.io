@@ -115,6 +115,15 @@ export default defineConfig({
     AstroPureIntegration(config)
   ],
 
+  // astro-pure imports `virtual:config` internally, which Vite's dependency optimizer
+  // (esbuild) cannot resolve. Excluding it forces Vite to serve astro-pure as source,
+  // where the virtual module resolves through the integration's Vite plugin.
+  vite: {
+    optimizeDeps: {
+      exclude: ['astro-pure']
+    }
+  },
+
   // [Experimental]
   experimental: {
     // Allow compatible editors to support intellisense features for content collection entries

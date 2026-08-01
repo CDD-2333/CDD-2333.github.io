@@ -3,8 +3,9 @@ import { Image } from 'astro:assets'
 
 import { PostPreview } from 'astro-pure/components/pages'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
-import { Button, Card, Icon, Label } from 'astro-pure/user'
+import { Button, Card, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
+import Label from '@/components/home/Label.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
 import VisitCounter from '@/components/counter/VisitCounter.astro'
@@ -38,11 +39,12 @@ if (!images[imagePath])
       <div class='flex flex-col items-center gap-y-4'>
         <h1 class='text-3xl font-medium'>{config.author}</h1>
         <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='Beijing, China'>
+          <Label title='Beijing, China' titleKey='home.location'>
             <Icon name='location' class='size-5' slot='icon' />
           </Label>
           <Label
             title='Source code'
+            titleKey='home.source'
             as='a'
             href='https://github.com/cworld1/astro-theme-pure'
             target='_blank'
@@ -55,12 +57,14 @@ if (!images[imagePath])
     </section>
 
     <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='CS Undergraduate'>
-        <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
+      <Section title='CS Undergraduate' i18n='home.section.undergrad'>
+        <Button class='w-fit self-end' href='/about' variant='ahead'>
+          <span data-i18n='home.more.about'>More about me</span>
+        </Button>
       </Section>
       {
         allPostsByDate.length > 0 && (
-          <Section title='Posts'>
+          <Section title='Posts' i18n='home.section.posts'>
             <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
               {allPostsByDate.map((p) => (
                 <li class='flex flex-col gap-x-2 sm:flex-row'>
@@ -68,7 +72,9 @@ if (!images[imagePath])
                 </li>
               ))}
             </ul>
-            <Button title='More posts' class='w-fit self-end' href='/blog' variant='ahead' />
+            <Button class='w-fit self-end' href='/blog' variant='ahead'>
+              <span data-i18n='home.more.posts'>More posts</span>
+            </Button>
           </Section>
         )
       }
@@ -102,7 +108,7 @@ if (!images[imagePath])
       />
     </Section> */
       }
-      <Section title='Education'>
+      <Section title='Education' i18n='home.section.education'>
         <Card
           heading='B.S. Computer Science and Technology'
           subheading='Yuanpei College, Peking University, Beijing, China'
@@ -120,12 +126,14 @@ if (!images[imagePath])
         />
       </Section>
 
-      <Section title='Skills'>
-        <SkillLayout title='Tech Stack' skills={['C (Familiar)', 'C++ (Exploring)', 'Python (Exploring)', 'Haskell (Beginner)']} />
+      <Section title='Skills' i18n='home.section.skills'>
+        <SkillLayout title='Tech Stack' i18n='home.skills.tech' skills={['C (Familiar)', 'C++ (Exploring)', 'Python (Exploring)', 'Haskell (Beginner)']} />
       </Section>
 
       <VisitCounter sitePV class='text-center text-sm text-muted-foreground' />
     </div>
-    <p class='mt-12 text-center text-muted-foreground'>Be the change you wish to see in the world.</p>
+    <p data-i18n='home.quote' class='mt-12 text-center text-muted-foreground'>
+      Be the change you wish to see in the world.
+    </p>
   </main>
 </PageLayout>

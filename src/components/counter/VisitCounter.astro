@@ -13,44 +13,107 @@ const { pageView, sitePV, siteUV, class: className } = Astro.props
 ---
 
 {
-  pageView && <span class={className}>Views: <span id='busuanzi_value_page_pv' /></span>
+  pageView && (
+    <span class={className}>
+      <span data-i18n='counter.pageViews'>Views:</span> <span id='vercount_value_page_pv' />
+    </span>
+  )
 }
 {
-  sitePV && <span class={className}>Site Views: <span id='busuanzi_value_site_pv' /></span>
+  sitePV && (
+    <span class={className}>
+      <span data-i18n='counter.siteViews'>Site Views:</span> <span id='vercount_value_site_pv' />
+    </span>
+  )
 }
 {
-  siteUV && <span class={className}>Visitors: <span id='busuanzi_value_site_uv' /></span>
+  siteUV && (
+    <span class={className}>
+      <span data-i18n='counter.siteUV'>Visitors:</span> <span id='vercount_value_site_uv' />
+    </span>
+  )
 }
 
-<script is:inline data-astro-rerun>
+{/*
+ * Vercount-based counter (https://events.vercount.one). Runs once per page load.
+ * `data-astro-rerun` is intentionally omitted: this is a static site, so a full
+ * page load is the only navigation, and re-running on `astro:page-load` would
+ * double-count every page view if View Transitions are ever enabled.
+ */}
+<script is:inline>
   (function fetchVercount() {
-    const API = 'https://events.vercount.one/api/v2/log'
-    const url = window.location.href
+    var API = 'https://events.vercount.one/api/v2/log'
+    var CACHE_KEY = 'vercount_data'
+    var TIMEOUT = 5000
+
+    var url = window.location.href
     if (!url.startsWith('http')) return
 
-    const host = window.location.host || 'unknown-host'
-    const uvKey = 'vercount_uv_' + host.replace(/[^a-zA-Z0-9_-]/g, '_')
-    const isNewUv = document.cookie.indexOf(uvKey + '=') === -1
+    // Site identity is derived from the origin, so all pages share one counter.
+    var host = window.location.host || 'unknown-host'
+    var uvKey = 'vercount_uv_' + host.replace(/[^a-zA-Z0-9_-]/g, '_')
+
+    var KEYS = ['site_pv', 'page_pv', 'site_uv']
+
+    // Last known counts, cached so we can render immediately and survive outages.
+    var cache = null
+    try {
+      cache = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null')
+    } catch (e) {
+      /* ignore corrupted cache */
+    }
+
+    function apply(data) {
+      if (!data) return
+      for (var i = 0; i < KEYS.length; i++) {
+        var el = document.getElementById('vercount_value_' + KEYS[i])
+        if (el) {
+          var value = data[KEYS[i]]
+          el.textContent = value == null ? '—' : String(value)
+        }
+      }
+    }
+
+    // Render cached values right away (avoids an empty flash and works offline).
+    if (cache) apply(cache)
+
+    var isNewUv = document.cookie.indexOf(uvKey + '=') === -1
+    // Set the UV cookie optimistically so a duplicate run can't double-count,
+    // and clear it on failure so a lost UV is retried on a later visit.
     if (isNewUv) {
       document.cookie = uvKey + '=1; path=/; max-age=31536000; samesite=lax'
     }
 
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null
+    var timer = setTimeout(function () {
+      if (controller) controller.abort()
+    }, TIMEOUT)
+
     fetch(API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url, isNewUv })
+      signal: controller ? controller.signal : undefined,
+      body: JSON.stringify({ url: url, isNewUv: isNewUv })
     })
       .then(function (r) { return r.json() })
       .then(function (res) {
         var data = (res && res.data) || res || {}
-        var keys = ['site_pv', 'page_pv', 'site_uv']
-        for (var i = 0; i < keys.length; i++) {
-          var el = document.getElementById('busuanzi_value_' + keys[i])
-          if (el) el.textContent = data[keys[i]] || '0'
+        apply(data)
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify(data))
+        } catch (e) {
+          /* storage unavailable; just keep in-memory values */
         }
       })
       .catch(function () {
-        // Counter is non-essential; fail silently
+        // No fresh data and nothing cached: show a placeholder instead of an empty number.
+        if (!cache) apply({})
+        // Counter is non-essential; keep whatever cached value was shown.
+        // The server never acknowledged this visit, so allow the UV retry.
+        if (isNewUv) {
+          document.cookie = uvKey + '=; path=/; max-age=0; samesite=lax'
+        }
       })
+      .finally(function () { clearTimeout(timer) })
   })()
 </script>

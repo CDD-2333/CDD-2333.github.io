@@ -1,0 +1,27 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+import { cn } from '@/utils'
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+  title: string
+  href?: string
+  class?: string
+  /** Optional i18n key — when set, the label text gets translated client-side. */
+  titleKey?: string
+}
+const { class: className, as: Tag = 'div', title, href, titleKey, ...props } = Astro.props
+---
+
+<Tag
+  class={cn(
+    className,
+    'flex flex-row items-center justify-center gap-x-2',
+    href && 'hover:opacity-75 transition-all'
+  )}
+  href={href}
+  {...props}
+>
+  <slot name='icon' />
+  <p data-i18n={titleKey}>{title}</p>
+</Tag>

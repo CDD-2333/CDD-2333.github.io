@@ -11,28 +11,43 @@ const headings = [
 ]
 ---
 
-<PageLayout title='About' {headings} comment>
-  <p>Coderdiao, B.S. Candidate</p>
-  <p>
+<PageLayout title='About' titleKey='about.title' {headings} view comment>
+  <p data-i18n='about.intro1'>Coderdiao, B.S. Candidate</p>
+  <p data-i18n='about.intro2'>
     Yuanpei College, Peking University
   </p>
-  <p>
+  <p data-i18n='about.motto'>
     Motto: Stay hungry, Stay foolish.
   </p>
   <Button title='GitHub' class='w-fit' href='https://github.com/CDD-2333' variant='ahead' />
 
   {/* contact-information */}
-  <h2 id='contact-information'>Contact Information</h2>
+  <h2 id='contact-information' data-i18n='about.contact'>Contact Information</h2>
   <ul>
-    <li><strong>Name:</strong> Coderdiao, B.S. Candidate</li>
-    <li><strong>Institution:</strong> Yuanpei College, Peking University</li>
-    <li><strong>Address:</strong> No.5 Yiheyuan Rd., Haidian District, Beijing, China</li>
-    <li><strong>Email:</strong> coderdiaocdd@163.com</li>
-    <li><strong>Postal Code:</strong> 100871</li>
+    <li>
+      <strong data-i18n='about.contact.name'>Name:</strong>{' '}
+      <span data-i18n='about.contact.nameVal'>Coderdiao, B.S. Candidate</span>
+    </li>
+    <li>
+      <strong data-i18n='about.contact.institution'>Institution:</strong>{' '}
+      <span data-i18n='about.contact.institutionVal'>Yuanpei College, Peking University</span>
+    </li>
+    <li>
+      <strong data-i18n='about.contact.address'>Address:</strong>{' '}
+      <span data-i18n='about.contact.addressVal'>
+        No.5 Yiheyuan Rd., Haidian District, Beijing, China
+      </span>
+    </li>
+    <li>
+      <strong data-i18n='about.contact.email'>Email:</strong> coderdiaocdd@163.com
+    </li>
+    <li>
+      <strong data-i18n='about.contact.postal'>Postal Code:</strong> 100871
+    </li>
   </ul>
 
   {/* education */}
-  <h2 id='education'>Education</h2>
+  <h2 id='education' data-i18n='about.education'>Education</h2>
   <Timeline
     events={[
       {
@@ -51,19 +66,25 @@ const headings = [
   />
 
   {/* tech-stack */}
-  <h2 id='tech-stack'>Tech Stack</h2>
+  <h2 id='tech-stack' data-i18n='about.tech'>Tech Stack</h2>
   <p>
-    <strong>C</strong> (Familiar) | <strong>C++</strong> (Exploring) | <strong>Python</strong> (Exploring) | <strong>Haskell</strong> (Beginner)
+    <strong>C</strong> (<span data-i18n='skill.familiar'>Familiar</span>) |{' '}
+    <strong>C++</strong> (<span data-i18n='skill.exploring'>Exploring</span>) |{' '}
+    <strong>Python</strong> (<span data-i18n='skill.exploring'>Exploring</span>) |{' '}
+    <strong>Haskell</strong> (<span data-i18n='skill.beginner'>Beginner</span>)
   </p>
 
   {/* research-interest */}
-  <h2 id='research-interest'>Research Interest</h2>
-  <p>Exploring...</p>
-  <p><strong>Research Papers:</strong> To be filled...</p>
+  <h2 id='research-interest' data-i18n='about.research'>Research Interest</h2>
+  <p data-i18n='about.research.line'>Exploring...</p>
+  <p>
+    <strong data-i18n='about.research.papersLabel'>Research Papers:</strong>{' '}
+    <span data-i18n='about.research.papersVal'>To be filled...</span>
+  </p>
 
   {/* about-blog */}
-  <h2 id='about-blog'>About Blog</h2>
-  <p>Website history:</p>
+  <h2 id='about-blog' data-i18n='about.blog'>About Blog</h2>
+  <p data-i18n='about.blog.history'>Website history:</p>
   <Timeline
     events={[
       {
@@ -73,7 +94,7 @@ const headings = [
       }
     ]}
   />
-  <p>
+  <p data-i18n='about.blog.thanks'>
     The smooth operation and personalized customization of website also rely on the resources and
     technical support provided by the following excellent projects/service providers:
   </p>
