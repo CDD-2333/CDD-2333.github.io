@@ -54,7 +54,7 @@ C++中，设计程序的过程就是设计类的过程
     与类同名，有且仅有一个参数为同类对象的**引用 / 常引用**也即`T::T(&T) / T::T(const &T)`  
     编译器会默认生成无参数的复制构造函数，如果定义了，则不生成  
     调用过程：
-    ```CPP
+    ```cpp
     Complex::Complex(Complex &c){}
     Complex c1;
     Complex c2(c1); //等同于Complex c2=c1，此处是初始化，执行了复制构造函数而非赋值
@@ -177,7 +177,7 @@ C++中，设计程序的过程就是设计类的过程
     派生类对象可以赋值给基类，可以初始化基类引用，可以把地址赋值给基类指针 *（以上赋值不会包含派生类特有对象）*  
 5. 强制指针转换  
     使用如下语句可以强制将基类地址赋给派生类，但是可能引发程序崩溃（访问未知内存）  
-    ```CPP
+    ```cpp
     class Base{}
     class Derived:public Base{}
     Base* ptrbase=&objDerived;
@@ -239,7 +239,7 @@ C++中，设计程序的过程就是设计类的过程
         **注意：**由于后接`/0`，因此实际输出宽度为参数-1
         - 自定义  
         实质是定义函数  
-        ```CPP
+        ```cpp
         //e.g.
         ostream& tab(ostream& os){
             return os<<'\t';
@@ -266,7 +266,7 @@ C++中，设计程序的过程就是设计类的过程
 调用顺序：参数类型完全匹配的函数→完全匹配的模板→可通过强制类型转换调用的函数→报错  
 3. 类模板  
 快速定义一些相似的类（称为模板类）：  
-```CPP
+```cpp
 template<类型参数表>  
 返回值类型 类模板名<类型参数名列表>::成员函数名(参数表){
 
@@ -373,7 +373,7 @@ template<类型参数表>
     要求区间已升序且容器支持随机迭代器  
     7. `bitset`  
     包含在头文件`#include <bitset>`下，为类模板  
-    ```CPP
+    ```cpp
     template<size_t N>//int常数
     class bitset{
         ...
@@ -436,7 +436,7 @@ template<类型参数表>
     类似于`for(T/auto(&) i:array)`的循环，依次访问数组元素  
 5. 右值引用和`move`语义  
     能取地址的即为左值
-    ```C++
+    ```cpp
     class A(){}
     A& ref=A() //error
     A&& ref=A() //correct
@@ -450,7 +450,7 @@ template<类型参数表>
     包含在`#include <regex>`头文件中，快速判别字符串格式和提取信息  
 8. Lambda表达式  
     本质上是若干函数对象的封装  
-    ```C++
+    ```cpp
     auto [](T1 ,T2 ,...)->T{
         ;
     }
@@ -464,7 +464,7 @@ template<类型参数表>
     函数模板的形参如果为`&&`，则事实上为万能引用（可接受右值/左值）  
     `forward`包含在头文件`#include <utility>`下，可用于转发传入的左值/右值到对应函数  
     e.g.
-    ```C++
+    ```cpp
     //(已经定义参数分别为左值/右值的函数function)
     template<typename T>
     void wrapper(T&& arg){
@@ -485,7 +485,7 @@ template<类型参数表>
     e.g.`std::vector v{1,2,3}`可被自动推导为`vector<int>`  
 2. 结构化绑定  
     `tuple`在C++11中引入，以下方式的访问在C++17中引入：  
-    ```C++
+    ```cpp
     tuple<int,string,double> t{0,3.14,"eee"};
     auto [a,b,c]=t;
     cout<<a; //0
@@ -831,7 +831,7 @@ for x in a:
 	hello()
 	```
 	输出结果如下
-	```
+	```text
 	> hello world.
 	> very good.
 	```
