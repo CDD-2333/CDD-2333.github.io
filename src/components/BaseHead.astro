@@ -81,6 +81,9 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
   href={`${Astro.site}rss.xml`}
 />
 
+{/* Vercount initializes all vercount_value_* counter elements on the page. */}
+<script is:inline defer src='https://events.vercount.one/js'></script>
+
 <meta content={Astro.generator} name='generator' />
 
 {

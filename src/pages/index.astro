@@ -26,23 +26,32 @@ if (!images[imagePath])
 ---
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#659EB9'>
-  <main class='flex w-full flex-col items-center'>
-    <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
-      <Image
-        src={images[imagePath]()}
-        alt={config.logo.alt || 'Profile'}
-        class='h-28 w-auto rounded-full border p-1'
-        loading='eager'
-        fetchpriority='high'
-      />
+  <main class='home-page relative flex w-full flex-col items-center'>
+    <div class='home-decoration' aria-hidden='true'>
+      <span class='home-decoration-orb home-decoration-orb--one'></span>
+      <span class='home-decoration-orb home-decoration-orb--two'></span>
+      <span class='home-decoration-grid'></span>
+    </div>
 
-      <div class='flex flex-col items-center gap-y-4'>
-        <h1 class='text-3xl font-medium'>{config.author}</h1>
-        <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='Beijing, China' titleKey='home.location'>
+    <section class='home-hero animate mb-14 flex flex-col items-center gap-y-7' id='content-header'>
+      <div class='home-avatar-wrap'>
+        <Image
+          src={images[imagePath]()}
+          alt={config.logo.alt || 'Profile'}
+          class='home-avatar'
+          loading='eager'
+          fetchpriority='high'
+        />
+      </div>
+
+      <div class='home-hero-copy flex flex-col items-center gap-y-4'>
+        <h1 class='home-name text-4xl font-semibold sm:text-5xl'>{config.author}</h1>
+        <div class='home-meta flex flex-wrap justify-center gap-x-6 gap-y-3'>
+          <Label class='home-meta-item' title='Beijing, China' titleKey='home.location'>
             <Icon name='location' class='size-5' slot='icon' />
           </Label>
           <Label
+            class='home-meta-item'
             title='Source code'
             titleKey='home.source'
             as='a'
@@ -56,23 +65,19 @@ if (!images[imagePath])
 
     </section>
 
-    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='CS Undergraduate' i18n='home.section.undergrad'>
-        <Button class='w-fit self-end' href='/about' variant='ahead'>
+    <div id='content' class='home-content animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
+      <Section class='home-section home-focus-section' title='CS Undergraduate' i18n='home.section.undergrad'>
+        <Button class='home-cta w-fit self-end' href='/about' variant='ahead'>
           <span data-i18n='home.more.about'>More about me</span>
         </Button>
       </Section>
       {
         allPostsByDate.length > 0 && (
-          <Section title='Posts' i18n='home.section.posts'>
-            <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
-              {allPostsByDate.map((p) => (
-                <li class='flex flex-col gap-x-2 sm:flex-row'>
-                  <PostPreview post={p} />
-                </li>
-              ))}
+          <Section class='home-section' title='Posts' i18n='home.section.posts'>
+            <ul class='home-post-list'>
+              {allPostsByDate.map((p) => <PostPreview post={p} class='home-post-item' />)}
             </ul>
-            <Button class='w-fit self-end' href='/blog' variant='ahead'>
+            <Button class='home-cta w-fit self-end' href='/blog' variant='ahead'>
               <span data-i18n='home.more.posts'>More posts</span>
             </Button>
           </Section>
@@ -108,31 +113,41 @@ if (!images[imagePath])
       />
     </Section> */
       }
-      <Section title='Education' i18n='home.section.education'>
-        <Card
-          heading='B.S. Computer Science and Technology'
-          subheading='Yuanpei College, Peking University, Beijing, China'
-          date='2025 - Present'
-        />
-        <Card
-          heading='B.Phil Logic (Double Major)'
-          subheading='Department of Philosophy, Peking University, Beijing, China'
-          date='2026 - Present'
-        />
-        <Card
-          heading='The High School Affiliated to Renmin University of China'
-          subheading='Beijing, China'
-          date='2019 - 2025'
-        />
+      <Section class='home-section' title='Education' i18n='home.section.education'>
+        <div class='home-education-list'>
+          <Card
+            class='home-education-card'
+            heading='B.S. Computer Science and Technology'
+            subheading='Yuanpei College, Peking University, Beijing, China'
+            date='2025 - Present'
+          />
+          <Card
+            class='home-education-card'
+            heading='B.Phil Logic (Double Major)'
+            subheading='Department of Philosophy, Peking University, Beijing, China'
+            date='2026 - Present'
+          />
+          <Card
+            class='home-education-card'
+            heading='The High School Affiliated to Renmin University of China'
+            subheading='Beijing, China'
+            date='2019 - 2025'
+          />
+        </div>
       </Section>
 
-      <Section title='Skills' i18n='home.section.skills'>
-        <SkillLayout title='Tech Stack' i18n='home.skills.tech' skills={['C (Familiar)', 'C++ (Exploring)', 'Python (Exploring)', 'Haskell (Beginner)']} />
+      <Section class='home-section' title='Skills' i18n='home.section.skills'>
+        <div class='home-skills-panel'>
+          <SkillLayout title='Tech Stack' i18n='home.skills.tech' skills={['C (Familiar)', 'C++ (Exploring)', 'Python (Exploring)', 'Haskell (Beginner)']} />
+        </div>
       </Section>
 
-      <VisitCounter sitePV class='text-center text-sm text-muted-foreground' />
+      <div class='home-counter-shell'>
+        <span class='home-counter-dot' aria-hidden='true'></span>
+        <VisitCounter sitePV class='home-counter' />
+      </div>
     </div>
-    <p data-i18n='home.quote' class='mt-12 text-center text-muted-foreground'>
+    <p data-i18n='home.quote' class='home-quote mt-12 text-center text-muted-foreground'>
       Be the change you wish to see in the world.
     </p>
   </main>

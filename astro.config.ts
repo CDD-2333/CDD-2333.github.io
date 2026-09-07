@@ -82,6 +82,16 @@ export default defineConfig({
         light: 'github-light',
         dark: 'github-dark'
       },
+      // Keep code-fence language names case-insensitive for common C/C++ and Python spellings.
+      // Shiki's built-in language IDs are lowercase, while existing posts use `CPP`.
+      langAlias: {
+        C: 'c',
+        CPP: 'cpp',
+        'C++': 'cpp',
+        PY: 'python',
+        Python: 'python',
+        PYTHON: 'python'
+      },
       transformers: [
         // Two copies of @shikijs/types (one under node_modules
         // and another nested under @astrojs/markdown-remark → shiki).
