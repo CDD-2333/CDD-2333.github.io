@@ -4,6 +4,7 @@ description: 'C++ 与 Python 程序设计实习课程笔记，整理面向对象
 publishDate: '2026-09-01 20:00:00'
 tags:
   - Class Note
+  - Practice of Programming
 ---
 
 # 程序设计实习
