@@ -19,6 +19,7 @@ import {
   transformerNotationHighlight,
   transformerRemoveNotationEscape
 } from './src/plugins/shiki-official/transformers.ts'
+import x86Att from './src/plugins/shiki-x86-att.ts'
 import config from './src/site.config.ts'
 
 // https://astro.build/config
@@ -82,9 +83,12 @@ export default defineConfig({
         light: 'github-light',
         dark: 'github-dark'
       },
+      langs: [x86Att],
       // Keep code-fence language names case-insensitive for common C/C++ and Python spellings.
       // Shiki's built-in language IDs are lowercase, while existing posts use `CPP`.
       langAlias: {
+        // Match the Markdown fence used by the local VS Code assembly extension.
+        asm: 'x86asm',
         C: 'c',
         CPP: 'cpp',
         'C++': 'cpp',

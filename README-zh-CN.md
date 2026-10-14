@@ -80,6 +80,24 @@ bun preview
 bun pure new
 ```
 
+### 汇编代码高亮
+
+Markdown 和 MDX 中的 AT&T 风格 x86 汇编使用 `asm` 代码块，方便与本地 VS Code 扩展共用语言标记。也兼容 `x86asm`、`gas`、`att`、`attasm`、`asm-att` 和 `x86asm-att`：
+
+```asm
+.text
+.globl main
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    leaq 8(%rax,%rcx,4), %rdx
+    movl $42, %eax # 返回值
+    popq %rbp
+    retq
+```
+
+高亮覆盖指令、寄存器、立即数、标签、GNU 汇编伪指令和注释，并适配亮色、暗色主题。本站的 `asm` 标记默认使用 AT&T 语法规则。
+
 ## 贡献
 
 为了花更多时间编写代码，减少在空白上纠结的时间，本项目使用代码约定和样式来鼓励一致性。风格一致的代码更容易（且更不容易出错）进行审查、维护和理解。
